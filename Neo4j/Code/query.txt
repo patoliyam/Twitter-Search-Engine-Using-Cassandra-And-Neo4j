@@ -1,0 +1,44 @@
+1. MATCH (u:USER)-[:POSTED]->(t:POST) where u.author_screen_name="iamsdrRk" return t
+
+2. MATCH (u1:USER)-[:POSTED]->(t:POST)-[:MENTIONS]->(u2:USER) where u1.author_screen_name="emunoz8_munoz" return u2
+
+3. MATCH (h1:HASHTAG)-[:TAGS]-(t:POST)-[:TAGS]-(h2:HASHTAG)
+WHERE h1.hashtag <> h2.hashtag AND h1.hashtag < h2.hashtag
+RETURN h1.hashtag, h2.hashtag, COUNT(t) as pairoccurance
+ORDER BY pairoccurance DESC
+LIMIT 20
+
+4. MATCH (h:HASHTAG)-[:TAGS]-(t:POST)-[:MENTIONS]-(u:USER)
+RETURN h.hashtag, u.author_screen_name, COUNT(t) as count_of_mention_with_hashtag
+ORDER BY count_of_mention_with_hashtag DESC
+LIMIT 20
+
+5. MATCH (h:HASHTAG)-[:TAGS]-(t:POST)-[:POSTED_FROM]-(l:LOCATION{location:"Ahmedabad"})
+RETURN h.hashtag, COUNT(t) as occurance
+ORDER BY occurance DESC
+
+6. MATCH (u1:USER)-[:POSTED]->(t1:POST)-[:RETWEETED]->(t2:POST)<-[:POSTED]-(u2:USER)
+//WHERE u1.author_screen_name <> u2.author_screen_name //Not necessary I think
+RETURN u1.author_screen_name, u2.author_screen_name, COUNT(t1) as occurance
+ORDER BY occurance DESC
+
+//MATCH (u1:USER{author_screen_name:'NarsiOm'})-[:POSTED]->(t1:POST)-[:RETWEETED]->(t2:POST)<-[:POSTED]-(u2:USER{author_screen_name:'ShriManoj9'})
+//WHERE u1.author_screen_name <> u2.author_screen_name //Not necessary I think
+//RETURN u1.author_screen_name, u2.author_screen_name,t1.tid,t2.tid, COUNT(t1) as occurance
+//ORDER BY occurance DESC
+
+7. MATCH (u1:USER)-[:POSTED]->(t1:POST)-[:REPLY_OF]->(t2:POST)<-[:POSTED]-(u2:USER)
+//WHERE u1.author_screen_name <> u2.author_screen_name //Not necessary I think
+RETURN u1.author_screen_name, u2.author_screen_name, COUNT(t1) as occurance
+ORDER BY occurance DESC
+
+//MATCH (u1:USER{author_screen_name:'fakeAshishBee'})-[:POSTED]->(t1:POST)-[:REPLY_OF]->(t2:POST)<-[:POSTED]-(u2:USER{author_screen_name:'fakeAshishBee'})
+////WHERE u1.author_screen_name <> u2.author_screen_name //Not necessary I think
+//RETURN u1.author_screen_name, u2.author_screen_name,t1.tid,t2.tid, COUNT(t1) as occurance
+//ORDER BY occurance DESC
+
+8. MATCH (u:USER {author_screen_name:"fakeAshishBee"})-[:POSTED]-(t:TWEET)
+//MATCH (u:USER {author_screen_name:"fakeAshishBee"})-[:POSTED]-(t:POST)
+OPTIONAL MATCH (t)-[r]-() 
+DELETE t, r
+//This will effect retweets/reply_of deleted, so, is it correct to remove relationship

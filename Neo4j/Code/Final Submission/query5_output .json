@@ -1,0 +1,45 @@
+	
+[
+  {
+    "keys": [
+      "user",
+      "location",
+      "number_of_tweets"
+    ],
+    "length": 3,
+    "_fields": [
+      "speakblunt",
+      "Assam",
+      {
+        "low": 5,
+        "high": 0
+      }
+    ],
+    "_fieldLookup": {
+      "user": 0,
+      "location": 1,
+      "number_of_tweets": 2
+    }
+  },
+  {
+    "keys": [
+      "user",
+      "location",
+      "number_of_tweets"
+    ],
+    "length": 3,
+    "_fields": [
+      "kor_singh",
+      "Assam",
+      {
+        "low": 1,
+        "high": 0
+      }
+    ],
+    "_fieldLookup": {
+      "user": 0,
+      "location": 1,
+      "number_of_tweets": 2
+    }
+  }
+]
